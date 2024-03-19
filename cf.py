@@ -27,14 +27,14 @@ def cfswitch(cfheadersLmao: dict, cfzone, ip):
     dnsresp = requests.get(f"https://api.cloudflare.com/client/v4/zones/{cfzone}/dns_records?type=A", headers=cfheadersLmao)
     if dnsresp.status_code != 200: raise BufferError
 
-    #purge dns records
+    # purge dns records
     # cf add delete all to ur api mf
-    # for record in dnsresp.json()["result"]:
-    #     requests.delete(f"https://api.cloudflare.com/client/v4/zones/{cfzone}/dns_records/{record['id']}", headers=cfheadersLmao)
+    for record in dnsresp.json()["result"]:
+        requests.delete(f"https://api.cloudflare.com/client/v4/zones/{cfzone}/dns_records/{record['id']}", headers=cfheadersLmao)
 
     # get records replace placeholder with ip and upload
-    # with open(f"{__file__.replace('__init__.py', '')}confusing.wtf.txt") as dnsrecords:
-    #     newdns = dnsrecords.read().replace("REPLACEHERE", ip)
+    #with open(f"{__file__.replace('__init__.py', '')}confusing.wtf.txt") as dnsrecords:
+    #    newdns = dnsrecords.read().replace("REPLACEHERE", ip)
 
     # upload records with new ip
     # requests.Request('POST', f"https://api.cloudflare.com/client/v4/zones/{cfzone}/dns_records/import", headers=uploadHeaders, files=upload).prepare().body.decode('utf8')
