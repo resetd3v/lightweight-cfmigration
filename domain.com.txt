@@ -1,1 +1,0 @@
-beamed.domain.com.	1	IN	A	REPLACEHERE ; this is a comment
