@@ -20,7 +20,7 @@ cfFiggy = {
 
 cfheadersLmao = {"Authorization" : f"Bearer {cfFiggy['apiKey']}"}
 
-# also async in bot idk y tbh
+# also async in bot cuz wait until returner
 def cfswitch(cfheadersLmao: dict, cfzone, ip):
     timer = time.time()
     # get dns records
