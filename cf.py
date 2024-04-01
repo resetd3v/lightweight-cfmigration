@@ -94,7 +94,7 @@ cfheadersLmao = {"Authorization" : f"Bearer {cfFiggy['apiKey']}"}
 
 # bestest
 system("cls || clear")
-print(f"\ninit kys module 9000 | no input loop or manual input for u")
+print(f"\ninit kys module 9000 | i kiss boys (ren)")
 isdatmfvalidtho = changeCheck(cfFiggy["zoneID"])
 
 if isdatmfvalidtho["error"] != "":
