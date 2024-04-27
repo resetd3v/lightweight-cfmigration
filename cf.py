@@ -68,7 +68,7 @@ def changeCheck(automigrate=True):
         fileLmao.close()
 
     # up to date
-    if iper == respText: return {"error" : "ipValid"}
+    if iper == respText: return {"success" : False, "error" : "ipValid"}
 
     with open(f"{__file__.replace(f'cf.py', '')}tmp.txt", "w") as fileLmao:
         # clear file
@@ -76,17 +76,18 @@ def changeCheck(automigrate=True):
         fileLmao.write(respText)
         fileLmao.close()
     
-    if automigrate:
-        try: switchresult = cfswitch(respText)
-        except: return {"success" : False, "error" : "unknownDog"}
-        if not switchresult["success"]: return {"success" : False, "error": switchresult["error"]}
-        
-        dnsmode = "switched" if switchresult["originalCount"] > 0 else "created"
-        cfswitchText = f"cfswitch returned {switchresult["success"]} | {dnsmode} {switchresult["recordCount"]} records in {switchresult["timeElapsed"]}s"
+    try: switchresult = cfswitch(respText)
+    except: return {"success" : False, "error" : "unknownDog"}
+    #if not switchresult["success"]: return {"success" : False, "error": switchresult["error"]}
+    
+    dnsmode = "switched" if switchresult["originalCount"] > 0 else "created"
+    cfswitchText = f"cfswitch returned {switchresult["success"]} | {dnsmode} {switchresult["recordCount"]} records in {switchresult["timeElapsed"]}s"
 
     iptext = f"{iper.split('.')[0]}.*.*.* -> {respText.split('.')[0]}.*.*.*"
     # can do "{iptext} {f'| cf returned {success}' if automigrate}"" but cuz the second part we cant, atleast on python ver below 11
-    return {"success" : True, "error" : "", "ip" : iptext, "cfResp" : cfswitchText if automigrate else ''}
+    resp = {"success" : switchresult["success"], "error" : switchresult["error"]}
+    if switchresult["success"]: resp["ip"], resp["cfResp"] = {"ip" : iptext}, {"cfResp" : cfswitchText}
+    return switchresult
 
 # auto retrieve zone id soontm
 parser = argparse.ArgumentParser()
