@@ -53,6 +53,7 @@ async def cfcheck():
         }
 
 
+        if successCount == 0 and failCount == 0: error = "ipValid"
 
 
 @tasks.loop(minutes=5)
